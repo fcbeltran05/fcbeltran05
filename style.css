@@ -1,0 +1,759 @@
+/* =========================================================
+   1. DESIGN TOKENS (CSS variables)
+   =========================================================
+   Defining colors/fonts as named variables here means if you ever
+   want to change your accent color, you change it in ONE place
+   instead of hunting through the whole file. `:root` means "the
+   whole document" — these variables are available everywhere below.
+*/
+:root {
+  --bg: #f7f9fc;          /* soft off-white — main page background */
+  --surface: #eaf1fb;     /* light blue panel color, used for project boxes */
+  --text: #10233c;        /* dark navy — main text, high contrast on white */
+  --text-dim: #52708c;    /* muted blue-grey for secondary text */
+  --accent: #2f6fed;      /* blue accent */
+  --accent-dim: #1d4fb3;  /* darker blue, for hovers */
+  --border: #d7e3f2;      /* light blue-grey line color */
+ 
+  --font-mono: 'Space Mono', monospace;  /* for headings & data labels */
+  --font-sans: 'Inter', sans-serif;      /* for body copy */
+ 
+  --max-width: 780px;     /* how wide the content column gets on large screens */
+}
+ 
+/* =========================================================
+   2. RESET
+   =========================================================
+   Browsers apply their own default spacing/sizing to elements
+   (margins on <h1>, weird box sizing, etc). This section cancels
+   those defaults so you start from a predictable, blank slate.
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* box-sizing: border-box means when you set an element's width,
+     any padding/border is INCLUDED in that width instead of adding
+     to it. This makes layout math far less confusing. */
+}
+ 
+html {
+  scroll-behavior: smooth;
+  /* Makes clicking a nav link (like #about) scroll smoothly to that
+     section instead of jumping instantly. */
+}
+ 
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  /* line-height 1.6 means each line of text has extra breathing room
+     (1.6x the font size) — tight line-height is a common reason body
+     text feels cramped and hard to read. */
+}
+ 
+button {
+  font: inherit;
+  /* buttons don't inherit the page font by default in most browsers —
+     this makes any real <button> element match the rest of the site. */
+}
+ 
+/* =========================================================
+   3. LAYOUT HELPERS
+   ========================================================= */
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;   /* auto left/right margin centers a block element */
+  padding: 0 24px;  /* breathing room on small screens so text doesn't
+                        touch the edge of the browser window */
+}
+ 
+.section {
+  padding: 96px 0;
+  border-top: 1px solid var(--border);
+  /* the hairline rule between sections — used deliberately here as a
+     structural device (like a datasheet section break), not decoration */
+}
+ 
+/* =========================================================
+   4. HEADER / NAV
+   ========================================================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  /* sticky + top:0 makes the header stay pinned to the top of the
+     viewport as you scroll down, instead of scrolling away. */
+  background: rgba(247, 249, 252, 0.85);
+  backdrop-filter: blur(8px);
+  /* semi-transparent background + blur = content behind the header
+     shows through slightly blurred as you scroll under it. */
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+  /* z-index controls stacking order — a higher number sits ON TOP of
+     elements with a lower (or no) z-index. Needed here so the header
+     stays above content as it scrolls underneath. */
+}
+ 
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  /* flexbox: this row lays its two children (logo, nav) out
+     horizontally, vertically centers them, and pushes them to
+     opposite ends of the row. Flexbox is the standard tool for
+     "arrange these items in a row or column." */
+}
+ 
+.logo {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  text-decoration: none;
+  /* the logo is now an <a> (see index.html/projects.html), so it needs
+     its own color + text-decoration reset or it'd render as a plain
+     underlined blue link like any other anchor. */
+}
+ 
+.accent {
+  color: var(--accent);
+}
+ 
+nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  /* removes the default underline on links */
+  margin-left: 28px;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+  /* transition makes property changes (like color on hover) animate
+     smoothly over 0.2 seconds instead of snapping instantly. */
+}
+ 
+nav a:hover {
+  color: var(--text);
+}
+ 
+nav a.active {
+  color: var(--accent);
+  /* There's no built-in way for static HTML to detect "this is the
+     current page" — class="active" is added by hand to the matching
+     link in each file (see projects.html). If you add more pages
+     later, remember to set this by hand on each one too. */
+}
+ 
+/* =========================================================
+   5. HERO
+   ========================================================= */
+.hero {
+  padding: 96px 0 80px;
+  text-align: left;
+}
+ 
+/* A shorter version of the hero, used at the top of projects.html —
+   same type treatment, less vertical padding, since it's an interior
+   page and doesn't need a full "landing" moment. */
+.page-hero {
+  padding: 64px 0 48px;
+}
+ 
+.eyebrow {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+ 
+.hero h1,
+.page-hero h1 {
+  font-family: var(--font-mono);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  /* clamp(min, preferred, max) picks a font size that scales with the
+     viewport width (5vw = 5% of viewport width) but never goes below
+     2rem or above 3.4rem. This is a compact way to make text
+     responsive without writing separate rules for each screen size. */
+  line-height: 1.15;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+ 
+.page-hero h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  /* a smaller max size than the homepage hero — it's still a heading,
+     just not the star of the page the way the homepage one is. */
+}
+ 
+.hero-sub {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  max-width: 480px;
+  margin-bottom: 48px;
+}
+ 
+.page-hero .hero-sub {
+  margin-bottom: 0;
+}
+ 
+/* =========================================================
+   5b. HERO WITH HEADSHOT
+   =========================================================
+   The homepage hero is two columns: text on the left, portrait on
+   the right. On phones it collapses to one column with the photo
+   first. The photo is cropped to a 4:5 portrait rectangle no matter
+   what shape your original file is.
+*/
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  /* "1fr 240px" = the text column takes all remaining space and the
+     photo column is a fixed 240px wide. */
+  gap: 56px;
+  align-items: center;
+  /* vertically centers the text against the taller photo */
+}
+ 
+.headshot {
+  width: 100%;
+}
+ 
+.headshot img,
+.headshot-placeholder {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+}
+ 
+.headshot img {
+  object-fit: cover;
+  object-position: center top;
+  /* object-fit: cover crops the photo to fill the box instead of
+     stretching it. object-position keeps the top of the frame (your
+     face) in view if the crop has to cut something off. */
+  border: 1px solid var(--border);
+}
+ 
+/* Dashed "add a photo here" box, same visual language as the project
+   image placeholders. Disappears once you swap in the real <img>. */
+.headshot-placeholder {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  padding: 16px;
+}
+ 
+@media (max-width: 720px) {
+  .hero {
+    padding: 72px 0 64px;
+  }
+ 
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+ 
+  .headshot {
+    order: -1;
+    /* order: -1 moves the photo BEFORE the text in the stacked layout
+       without changing the HTML. */
+    max-width: 180px;
+  }
+}
+ 
+/* --- the animated waveform, the homepage hero's signature moment --- */
+.waveform {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 40px;
+}
+ 
+.waveform span {
+  display: block;
+  width: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: pulse 1.2s ease-in-out infinite;
+  /* This applies the @keyframes animation named "pulse" (defined below)
+     to each bar: 1.2 seconds per cycle, ease-in-out timing, and
+     "infinite" means it repeats forever rather than playing once. */
+}
+ 
+/* Each bar gets a different animation-delay so they don't all move
+   in lockstep — this staggering is what makes it read as a waveform
+   rather than a single pulsing block. nth-child(n) targets the nth
+   <span> inside .waveform. */
+.waveform span:nth-child(1) { height: 30%; animation-delay: 0s; }
+.waveform span:nth-child(2) { height: 70%; animation-delay: 0.1s; }
+.waveform span:nth-child(3) { height: 45%; animation-delay: 0.2s; }
+.waveform span:nth-child(4) { height: 90%; animation-delay: 0.3s; }
+.waveform span:nth-child(5) { height: 55%; animation-delay: 0.4s; }
+.waveform span:nth-child(6) { height: 80%; animation-delay: 0.5s; }
+.waveform span:nth-child(7) { height: 35%; animation-delay: 0.6s; }
+.waveform span:nth-child(8) { height: 60%; animation-delay: 0.7s; }
+ 
+@keyframes pulse {
+  /* @keyframes defines what an animation actually DOES over time.
+     0% is the start of the cycle, 50% the midpoint, 100% the end. */
+  0%, 100% { transform: scaleY(0.6); opacity: 0.6; }
+  50%      { transform: scaleY(1);   opacity: 1; }
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+  .waveform span { animation: none; }
+}
+/* This respects visitors who've told their OS "reduce motion" (an
+   accessibility setting, often used by people with vestibular
+   disorders) — for them, the animation is simply turned off. */
+ 
+/* =========================================================
+   6. SECTION LABELS & HEADINGS
+   ========================================================= */
+.section-label {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-bottom: 32px;
+}
+ 
+.section h2 {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+ 
+.lede {
+  font-size: 1.15rem;
+  max-width: 560px;
+  margin-bottom: 32px;
+}
+ 
+/* A smaller variant of .lede, used where the paragraph should take up
+   less vertical space (the compact about section, the work-teaser
+   intro). Note it's added as a SECOND class — class="lede lede-compact"
+   in the HTML — so it keeps .lede's rules and only overrides the two
+   listed here. This "combine two classes" pattern is common: one class
+   for the general look, a second small one for a specific tweak. */
+.lede-compact {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+ 
+/* =========================================================
+   7. ABOUT SECTION (compact)
+   ========================================================= */
+.quick-facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+}
+ 
+.quick-facts li::before {
+  content: '— ';
+  /* ::before inserts generated content immediately inside an element,
+     before its existing content. Here it prefixes each fact with an
+     em-dash instead of a bullet, matching the mono/datasheet feel,
+     without needing extra markup in the HTML for it. */
+  color: var(--accent);
+}
+ 
+/* =========================================================
+   8. BUTTONS
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  /* display: inline-flex lets the button sit inline with surrounding
+     text/links while still using flexbox internally, which is what
+     lets "gap" cleanly space the label from the arrow icon next to it. */
+}
+ 
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+ 
+.btn-primary:hover {
+  background: var(--accent-dim);
+}
+ 
+.btn-outline {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+ 
+.btn-outline:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+ 
+/* =========================================================
+   9. WORK TEASER GRID (homepage preview cards)
+   ========================================================= */
+.teaser-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* repeat(3, 1fr) is shorthand for "1fr 1fr 1fr" — three equal-width
+     columns. Much easier to read and adjust than typing it out. */
+  gap: 20px;
+  margin-bottom: 32px;
+}
+ 
+@media (max-width: 720px) {
+  .teaser-grid {
+    grid-template-columns: 1fr;
+    /* stack the three teaser cards into a single column on narrow
+       screens instead of squeezing them side by side */
+  }
+}
+ 
+.teaser-card {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+ 
+.teaser-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  /* a small upward shift on hover — a common, subtle way to signal
+     "this whole card is clickable" */
+}
+ 
+.teaser-image {
+  aspect-ratio: 4 / 3;
+  /* aspect-ratio locks the box's height relative to its width (here,
+     4:3) regardless of how wide it ends up being — the standard way
+     to reserve consistent image proportions before an image loads. */
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  padding: 8px;
+  margin-bottom: 12px;
+}
+ 
+.teaser-card h3 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+ 
+.teaser-card p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+ 
+.view-all {
+  margin-top: 4px;
+}
+ 
+/* =========================================================
+   10. FULL PROJECT WRITE-UPS (projects.html)
+   ========================================================= */
+.project-full {
+  margin-bottom: 24px;
+}
+ 
+/* The larger image placeholder at the top of each full project entry.
+   Same underlying pattern as .teaser-image (aspect-ratio + dashed
+   border standing in for a real photo), just bigger and using a 16:9
+   ratio, which suits wider diagrams/screenshots better than photos. */
+.project-image {
+  aspect-ratio: 16 / 9;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+ 
+/* Once you add a real <img> inside .project-image, this rule makes it
+   fill the box cleanly no matter the source photo's original
+   dimensions — without it, a real image would probably distort or
+   overflow the box. object-fit: cover crops to fill; keep the aspect
+   ratio above matched to your images' actual shape where you can. */
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+ 
+/* =========================================================
+   10a. PROJECT GALLERY (multiple images per project)
+   =========================================================
+   For a project with more than one picture, show them one at a
+   time at full size (same 16:9 box as a single .project-image)
+   with a prev/next arrow rather than squeezing several into one
+   row. Each picture is a .project-image that ALSO has the class
+   "gallery-slide" — only the one with "is-active" is visible; the
+   script near the end of projects.html moves that class when you
+   click an arrow.
+*/
+.project-gallery {
+  position: relative;
+}
+ 
+/* :not(.is-active) beats a plain .project-image rule on specificity,
+   so inactive slides hide without disturbing the centering/flex
+   layout .project-image already sets up for the active one. */
+.gallery-slide:not(.is-active) {
+  display: none;
+}
+ 
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(247, 249, 252, 0.9);
+  color: var(--text);
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+ 
+.gallery-arrow:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+ 
+.gallery-prev {
+  left: 12px;
+}
+ 
+.gallery-next {
+  right: 12px;
+}
+ 
+/* A gallery trimmed down to one image doesn't need an arrow to
+   nowhere — the script adds this class automatically in that case. */
+.project-gallery.single-image .gallery-arrow {
+  display: none;
+}
+ 
+.project-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+ 
+.project-head h2 {
+  font-size: 1.4rem;
+}
+ 
+.project-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  white-space: nowrap;
+  /* prevents the tag text from wrapping onto two lines */
+}
+ 
+.project-full p {
+  color: var(--text-dim);
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+ 
+.project-specs {
+  list-style: none;
+  /* removes the default bullet points from the <ul> */
+  display: flex;
+  flex-wrap: wrap;
+  /* flex-wrap lets items drop to a new line on narrow screens instead
+     of squeezing or overflowing */
+  gap: 24px;
+  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  margin-bottom: 20px;
+}
+ 
+.project-specs span {
+  display: block;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+ 
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+ 
+.pill-link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  /* a very large border-radius relative to the element's height turns
+     the rectangle into a fully rounded "pill" shape */
+  padding: 6px 14px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+ 
+.pill-link:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+ 
+/* =========================================================
+   10b. PUBLICATIONS (homepage)
+   =========================================================
+   One card per paper: title, authors, venue, then the IEEE Xplore
+   pill link (reuses .project-links / .pill-link from above).
+*/
+.pub-list {
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+ 
+.pub {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 24px;
+}
+ 
+.pub h3 {
+  font-size: 1.05rem;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+ 
+.pub-authors {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+ 
+.pub-authors strong {
+  color: var(--text);
+  font-weight: 600;
+  /* your own name stands out in the author list */
+}
+ 
+.pub-venue {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+ 
+/* =========================================================
+   11. CONTACT SECTION
+   ========================================================= */
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+ 
+.contact-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+ 
+.contact-links a:hover {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+}
+ 
+/* =========================================================
+   12. BACK LINK (bottom of projects.html)
+   ========================================================= */
+.back-link {
+  display: inline-block;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+ 
+.back-link:hover {
+  color: var(--accent);
+}
+ 
+/* =========================================================
+   13. FOOTER
+   ========================================================= */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+}
+ 
+.site-footer p {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+ 
+/* =========================================================
+   14. FOCUS STATES (accessibility — don't delete this)
+   =========================================================
+   By default, some browsers show no visible outline when a link/
+   button is focused via keyboard (Tab key). Removing focus outlines
+   without replacing them makes a site unusable for keyboard-only
+   visitors. This rule guarantees every focusable element always
+   gets a visible outline.
+*/
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

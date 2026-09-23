@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Francisco Cardenas Beltran</title>
+  <meta name="description" content="RF/mmWave and power electronics projects by Francisco Cardenas Beltran, an EE student at UCLA.">
+ 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+ 
+  <link rel="stylesheet" href="style.css">
+  <!--
+    This is a SEPARATE HTML file from index.html, but it links to the
+    SAME style.css. That's the normal pattern for a multi-page site:
+    one shared stylesheet, many pages. Any change you make to
+    style.css automatically applies to both pages — you never have to
+    duplicate styling per page.
+  -->
+</head>
+ 
+<body>
+ 
+  <!-- This header is deliberately near-identical to the one on
+       index.html — repeating the same header/nav markup on every
+       page is normal for a plain multi-page HTML site (no templating
+       engine here to share it automatically). The only difference is
+       the <a class="active"> below marks which nav item is "current." -->
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="logo">FCB<span class="accent">.</span></a>
+      <nav>
+        <a href="projects.html" class="active">Projects</a>
+        <!--
+          class="active" just gets a CSS rule (see style.css) that
+          colors it differently, so visitors can tell which page
+          they're on. There's no automatic way for plain HTML to know
+          "this is the current page" — you have to manually put
+          class="active" on the right link in each file.
+        -->
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+        <!--
+          These point to index.html#about rather than just #about,
+          because #about doesn't exist on THIS page — it only exists
+          on index.html. "page.html#id" means "go to page.html, then
+          jump to the element with that id."
+        -->
+      </nav>
+    </div>
+  </header>
+ 
+  <main>
+    <!-- ============ PAGE INTRO ============ -->
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="eyebrow">All Projects</p>
+        <h1>Selected work in RF, mmWave,<br>and power electronics.</h1>
+        <p class="hero-sub">
+          Research, coursework, and industry projects — spanning IC
+          design, antennas, and RF test &amp; measurement.
+        </p>
+      </div>
+    </section>
+ 
+
+    <!-- ============ PROJECT 3 ============ -->
+    <section id="sepic-converter" class="section">
+      <div class="wrap">
+        <article class="project-full">
+          <!--
+            ============ MULTIPLE IMAGES (SLIDESHOW) ============
+            .project-gallery holds one .project-image per picture;
+            each one also has the class "gallery-slide". Only the
+            slide with "is-active" is shown — the small script near
+            the end of this file moves that class to the next/previous
+            slide when you click an arrow. Swapping a placeholder for
+            a real photo works exactly as before: delete the
+            <span>Add image...</span> line and add an <img> tag.
+
+            TO ADD ANOTHER IMAGE: copy one whole
+            <div class="project-image gallery-slide">...</div> block
+            and paste it before the arrow buttons below.
+            TO REMOVE ONE: delete its block. Down to a single image,
+            the arrows hide themselves automatically.
+          -->
+          <div class="project-gallery" data-gallery>
+            <div class="project-image gallery-slide is-active">
+              <img src="images/SEPIC_converter.jpg" alt="SEPIC power converter schematic" />
+            </div>
+            <div class="project-image gallery-slide">
+              <img src="images/SEPIC_efficiency_curve.png" alt="SEPIC efficiency curve" />
+            </div>
+            <div class="project-image gallery-slide">
+              <img src="images/SEPIC_load_regulation.png" alt="SEPIC load regulation" />
+            </div>
+            <div class="project-image gallery-slide">
+              <img src="images/SEPIC_line_regulation.png" alt="SEPIC line regulation" wwidth="200" height="120" />
+            </div>
+            <div class="project-image gallery-slide">
+              <img src="images/SEPIC_schematic.png" alt="SEPIC power converter schematic" />
+            </div>
+
+
+            <button type="button" class="gallery-arrow gallery-prev" aria-label="Previous image">&larr;</button>
+            <button type="button" class="gallery-arrow gallery-next" aria-label="Next image">&rarr;</button>
+          </div>
+ 
+          <div class="project-head">
+            <h2>SEPIC Power Converter</h2>
+            <span class="project-tag">Industry · AnySignal</span>
+          </div>
+ 
+          <p>
+            Power Converter designed for S-Band, 20 or 30-Watt High Power Amplifier product 
+            for AnySignal. Converter at 32V, 3A has 85% efficiency with 1% voltage ripple. 
+            Single-Ended Primary Inductor Converter (SEPIC) was chosen as the topology due 
+            to it being a buck-boost as well as its simplicity with magnetics. A low pass 
+            LC filter was also added to the end of the converter to help with SEPIC’s 
+            inherent higher voltage ripple. LM5122 was chosen as a controller due to 
+            similarities to the LM5022, a controller on which we have radiation data on. 
+            The main difference between the two controllers is LM5122 has both a LO and HO output, 
+            meaning that a MOSFET can be used instead of the rectifying diode in a typical SEPIC converter. 
+            All other parts are rated to 30% of the current as per EEE-INST-002. Main challenges 
+            in design were mitigating ripple as well as heat dissipation from the primary 
+            switching MOSFET. The ripple was improved through placing an LC low pass filter
+             at the end of the circuit. The heat fro the MOSFET was reduced by increasing
+              V_GS due to this pushing the MOSFET to a more efficient operation mode. 
+          </p>
+ 
+          <ul class="project-specs">
+            <li><span>Power</span>105 W</li>
+            <li><span>Efficiency</span>85% at 3A</li>
+            <li><span>Ripple</span>1% voltage ripple</li>
+            <li><span>Tools</span> LT Spice, Keysight ADS PE-Pro, TI Power Stage Designer</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+ 
+    <!-- ============ PROJECT 4 ============ -->
+    <section id="rf-transceiver" class="section">
+      <div class="wrap">
+        <article class="project-full">
+          <!-- Same .project-gallery slideshow as the project above. -->
+          <div class="project-gallery" data-gallery>
+            <div class="project-image gallery-slide is-active">
+              <img src="images/wrap_pcb_blocks.jpg" alt="RF transceiver pcb blocks" />
+            </div>
+            <div class="project-image gallery-slide">
+              <img src="images/rx_wrap.png" alt="RF transceiver schematic" />
+            </div>
+            <div class="project-image gallery-slide">
+              <img src="images/wrap_diff_mixer.png" alt="RF transceiver differential mixer" />
+            </div>
+
+            <button type="button" class="gallery-arrow gallery-prev" aria-label="Previous image">&larr;</button>
+            <button type="button" class="gallery-arrow gallery-next" aria-label="Next image">&rarr;</button>
+          </div>
+ 
+          <div class="project-head">
+            <h2>IEEE WRAP Hardware:RF Transceiver Front-End</h2>
+            <span class="project-tag">Course Project</span>
+          </div>
+ 
+          <p>
+
+            This project was part of IEEE at UCLA's Wireless, RF, and Analog Project (WRAP). 
+            I designed a complete transistor-level RF transceiver front-end that successfully 
+            transmitted and received BPSK symbols. I simulated the transceiver blocks in 
+            LTspice and used Keysight ADS for impedance matching to maximize power transfer. 
+            The project also included an R&D phase in which the amplifiers, mixers, and 
+            oscillators were redesigned as differential circuits to improve SNR and reduce loss.<br>
+
+            As project lead, I also held lectures where I taught WRAP students (mostly third and second 
+            year undergraduates) about basic RF circuit design, including lectures on RF test and measurement,
+            class A amplifiers,mixers, oscillators, impedance matching, and other RF basics. Then, I coordinated 
+            the RnD phase of the project where 5 students worked on redesigning the transceriver blocks as 
+            differential circuits.
+          </p>
+ 
+          <ul class="project-specs">
+            <li><span>Modulation</span>BPSK</li>
+            <li><span>Level</span>Transistor-level design</li>
+            <li><span>Tools</span>LTspice, Keysight ADS</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+    <!-- ============ PROJECT 2 ============ -->
+    <section id="power-combiner" class="section">
+      <div class="wrap">
+        <article class="project-full">
+          <!-- Same .project-gallery slideshow as the project above. -->
+          <div class="project-gallery" data-gallery>
+            <div class="project-image gallery-slide is-active">
+              <img src="images/combiner_cosim.png" alt="Combiner Circuit Cosimulation."/>
+            </div>
+            <div class="project-image gallery-slide">
+              <img src="images/combiner_layout.png" alt="Combiner Circuit Layout."/>
+            </div>
+            <div class="project-image gallery-slide">
+              <img src="images/combiner_gain.png" alt="Measured S-Parameters."/>
+            </div>
+
+            <button type="button" class="gallery-arrow gallery-prev" aria-label="Previous image">&larr;</button>
+            <button type="button" class="gallery-arrow gallery-next" aria-label="Next image">&rarr;</button>
+          </div>
+ 
+          <div class="project-head">
+            <h2>Integrated Microwave Power Combiner</h2>
+            <span class="project-tag">Research · High Speed Electronics Lab</span>
+          </div>
+ 
+          <p>
+            Designed in UCLA High Speed Electronics Lab (P.I. M.C. Frank Chang). 
+            Achieved 0.6dB insertion loss across 1 GHz passband at 180 GHz. 
+            The design process began with designing the the individual coupled 
+            inductors for the power converter using lumped circuit elements in 
+            order to accurately estimate the expected passband for the transformers. 
+            By properly accounting for parasitic capacitance, resistance, and 
+            inductance, both the bandwidth as well as passband frequency can be 
+            chosen. From the lumped circuit model, the individual inductor layout 
+            shape was designed, and from there combined to make the power combiner. 
+            The main challenges for this project were the trade-offs between inductance, 
+            capacitance, and resistance within the combiner. Resistance means loss, so 
+            to get less resistance, there must be wider traces, which means more capacitance, 
+            which affects the frequency response of the combiner.
+          </p>
+ 
+          <ul class="project-specs">
+            <li><span>D-band loss</span>0.6 dB at 114 GHz</li>
+            <li><span>Process</span>28nm CMOS</li>
+            <li><span>Tools</span>Keysight ADS, EM co-simulation</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  
+
+    <!-- ============ PROJECT 6 ============ -->
+    <section id="pa-test-automation" class="section">
+      <div class="wrap">
+        <article class="project-full">
+          <!-- Same .project-gallery slideshow as the project above. -->
+          <div class="project-gallery" data-gallery>
+            <div class="project-image gallery-slide is-active">
+              <img src="images/PA_test_bench.jpg" alt="PA test bench" />
+            </div>
+            <div class="project-image gallery-slide">
+              <img src = "images/code_for_bench.png" alt="Code for bench" />
+            </div>
+            <div class="project-image gallery-slide">
+              <img src="images/load_pull_data.png" alt="Load pull data" />
+            </div>
+
+            <button type="button" class="gallery-arrow gallery-prev" aria-label="Previous image">&larr;</button>
+            <button type="button" class="gallery-arrow gallery-next" aria-label="Next image">&rarr;</button>
+          </div>
+ 
+          <div class="project-head">
+            <h2>RF Power Amplifier Test Automation</h2>
+            <span class="project-tag">Industry · AnySignal</span>
+          </div>
+ 
+          <p>
+            Developed automated test scripts for RF power amplifiers
+            using PyVISA and SciPy, running on a USRP B-200 with GNU
+            Radio. Performed large-signal characterization on PA
+            candidates for a 20–30 watt high-power-amplifier product
+            line during development. Also, performed load-pull tuning 
+            on PA candidates for efficiency, linearity, and gain.
+          </p>
+ 
+          <ul class="project-specs">
+            <li><span>Target</span>20–30W HPA candidates</li>
+            <li><span>Hardware</span>USRP B-200</li>
+            <li><span>Tools</span>GNU Radio, PyVISA, SciPy</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+ 
+    <!-- ============ BACK TO HOME ============ -->
+    <section class="section">
+      <div class="wrap">
+        <a href="index.html" class="back-link">&larr; Back to home</a>
+      </div>
+    </section>
+  </main>
+ 
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Panch. Built with HTML &amp; CSS.</p>
+    </div>
+  </footer>
+
+  <!--
+    ============ GALLERY SCRIPT ============
+    Powers every .project-gallery slideshow above: clicking an arrow
+    moves to the next or previous image. This is the only JavaScript
+    on the site.
+  -->
+  <script>
+    document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
+      var slides = gallery.querySelectorAll('.gallery-slide');
+      var prevBtn = gallery.querySelector('.gallery-prev');
+      var nextBtn = gallery.querySelector('.gallery-next');
+      var current = 0;
+
+      // A gallery with only one image doesn't need arrows — hide
+      // them instead of leaving controls that do nothing.
+      if (slides.length <= 1) {
+        gallery.classList.add('single-image');
+        return;
+      }
+
+      function show(index) {
+        slides[current].classList.remove('is-active');
+        // % (modulo) wraps the index around: one before the first
+        // slide becomes the last, and one past the last becomes
+        // the first again.
+        current = (index + slides.length) % slides.length;
+        slides[current].classList.add('is-active');
+      }
+
+      prevBtn.addEventListener('click', function () { show(current - 1); });
+      nextBtn.addEventListener('click', function () { show(current + 1); });
+    });
+  </script>
+
+</body>
+</html>
+ 

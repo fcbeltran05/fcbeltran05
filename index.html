@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<!--
+  DOCTYPE tells the browser "treat this as modern HTML5."
+  Without it, some browsers fall back into a compatibility mode
+  from the 1990s and layout gets weird. Always the first line.
+-->
+<html lang="en">
+<!--
+  <html> wraps the ENTIRE page. lang="en" tells screen readers and
+  search engines what language the content is in.
+-->
+ 
+<head>
+  <!--
+    Nothing in <head> is visible on the page itself. It's metadata:
+    instructions FOR the browser/search engines, not content for people.
+  -->
+ 
+  <meta charset="UTF-8">
+  <!-- Tells the browser which character set to use so accents, em-dashes,
+       etc. render correctly instead of turning into garbled symbols. -->
+ 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Without this, mobile browsers render the page at "desktop width"
+       (usually 980px) and then shrink it to fit, making everything tiny.
+       This line says: "use the actual width of the phone/tablet screen,
+       and don't zoom in or out by default." This is the line that makes
+       a site "responsive" instead of a tiny desktop page on mobile. -->
+ 
+  <title>Francisco Cardenas Beltran — RF &amp; mmWave Engineering</title>
+  <!-- Shows in the browser tab and in search results. -->
+ 
+  <meta name="description" content="Francisco Cardenas Beltran is a UCLA electrical engineering student working on RF/mmWave circuits, 
+  power electronics, and high-frequency test and measurement.">
+  <!-- Not visible on the page — this is the snippet Google shows under
+       your link in search results. -->
+ 
+  <!-- Google Fonts: we're loading two typefaces from Google's servers.
+       preconnect just tells the browser "you'll be talking to this domain
+       soon" so it can start the connection early — a small speed trick. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+ 
+  <link rel="stylesheet" href="style.css">
+  <!-- This is the line that connects this HTML file to the CSS file.
+       Without it, the page would load with zero styling — just plain
+       black text on a white background in the browser's default font. -->
+</head>
+ 
+<body>
+  <!-- Everything a visitor actually SEES goes inside <body>. -->
+ 
+  <!-- ============ HEADER / NAV ============ -->
+  <header class="site-header">
+    <!--
+      <header> is a "semantic" tag — it doesn't do anything visually by
+      itself, but it tells the browser (and screen readers, and search
+      engines) "this section is introductory/navigational content."
+      Using semantic tags (header, nav, main, section, footer) instead of
+      generic <div> everywhere is good practice: it's more accessible and
+      easier to read.
+    -->
+    <div class="wrap">
+      <!-- "wrap" is a plain div with no semantic meaning — it exists
+           purely so CSS can center content and cap its width. You'll
+           see this pattern (a .wrap or .container div) constantly. -->
+      <a href="index.html" class="logo">FCB<span class="accent">.</span></a>
+      <!-- Wrapping the logo in a link to "index.html" is the standard
+           pattern for "click the logo to go home." -->
+      <nav>
+        <!-- <nav> semantically marks "this is a block of navigation links." -->
+        <a href="projects.html">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+ 
+  <main>
+    <!-- <main> marks the primary content of the page (as opposed to
+         header/footer/nav, which repeat on every page of a site). -->
+ 
+    <!-- ============ HERO SECTION ============ -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <!--
+          "hero-grid" turns this row into two columns: your text on the
+          left, your headshot on the right. On phones the CSS stacks
+          them into one column with the photo on top (see style.css,
+          section 5b).
+        -->
+ 
+        <div class="hero-text">
+          <p class="eyebrow">RF / mmWave / Power Electronics</p>
+          <h1>Francisco Cardenas Beltran</h1>
+          <p class="hero-sub">
+            Fourth-year electrical engineering student at UCLA. I design
+            and measure RF/mmWave and analog circuits, from transmitter ICs to
+            power converters and antennas.
+          </p>
+ 
+          <!--
+            This is the one "signature moment" of the page — an animated
+            waveform line, done in pure CSS (no JS, no images). It's a nod
+            to RF signal work without being a gimmick. See style.css for
+            how the animation works.
+          -->
+          <div class="waveform" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <!-- aria-hidden="true" tells screen readers to skip this — it's
+               purely decorative and has no meaningful content to announce. -->
+        </div>
+ 
+        <!-- ============ HEADSHOT ============
+             <figure> is the semantic tag for "an image that goes with the
+             content." To add your photo:
+               1. Put the image file in an "images" folder next to this
+                  file, e.g. images/headshot.jpg
+                  (a portrait crop around 800 x 1000 px works well; the
+                  CSS crops it to a 4:5 rectangle automatically)
+               2. Delete the <div class="headshot-placeholder"> line below
+               3. Un-comment the <img> line below: delete the comment
+                  markers at the start and end of that line so only the
+                  <img ...> tag is left
+             The alt text is what screen readers announce and what shows
+             up if the image fails to load, so keep it descriptive.
+        -->
+        <figure class="headshot">
+        <img src="images/headshot.jpg" alt="Portrait of Francisco Cardenas Beltran"-->
+        </figure>
+      </div>
+    </section>
+ 
+    <!-- ============ ABOUT SECTION ============ -->
+    <section id="about" class="section">
+      <!--
+        id="about" is what the nav link href="#about" jumps to. An id
+        must be unique on the page (only one element can have id="about").
+        Classes (class="...") can repeat on many elements; ids cannot.
+      -->
+      <div class="wrap about-compact">
+        <!--
+          "about-compact" is a smaller, single-column about section:
+          a short bio, a row of quick facts, and a resume download
+          button. Less scrolling before visitors reach the projects,
+          which is the actual point of this site.
+        -->
+        <p class="section-label">01 — About</p>
+        <p class="lede lede-compact">
+          I'm a fourth-year electrical engineering student at UCLA working
+          on RF and mmWave electronics. My interests span RF/mmWave circuit
+          design, power electronics, and high-frequency systems.
+        </p>
+        <p class="lede lede-compact">
+          Most of my experience is in test and measurement: characterizing
+          power amplifiers, LNAs, mixers, and complete systems. I also
+          design and lay out circuits using Keysight ADS, LTspice, and
+          Altium Designer.
+        </p>
+        <ul class="quick-facts">
+          <li>UCLA EE, class of 2027</li>
+          <li>ISSCC 2026 co-author</li>
+        </ul>
+        <a href="CardenasBeltran_Resume.docx.pdf" download class="btn btn-primary">
+          Download Résumé
+          <span aria-hidden="true">↓</span>
+        </a>
+        <!--
+          `download` is a boolean attribute — just being present turns
+          on the behavior, no value needed. It tells the browser
+          "don't navigate to this file, save it to disk instead."
+          Without it, clicking this link would just open the PDF in
+          the browser tab.
+          IMPORTANT: this only works once an actual file named
+          resume.pdf sits in the same folder as this HTML file.
+        -->
+      </div>
+    </section>
+ 
+    <!-- ============ WORK / PROJECTS SECTION ============ -->
+    <section id="work" class="section">
+      <div class="wrap">
+        <p class="section-label">02 — Selected Work</p>
+        <p class="lede lede-compact">
+          Three highlights. The projects page has the full write-ups,
+          specs, and images.
+        </p>
+ 
+        <div class="teaser-grid">
+          <a href="#publications" class="teaser-card">
+            <div class="teaser-image">
+                <img src="images/die_photo.png" width="200" height="120" alt="G-band transmitter die photo">
+            </div>
+            <h3>G-Band Subharmonic Transmitter</h3>
+            <p>mmWave transmitter IC, published at ISSCC 2026.</p>
+          </a>
+ 
+          <a href="projects.html#power-combiner" class="teaser-card">
+            <div class="teaser-image">
+              <img src="images/power_combiner.png" width="200" height="120" alt="Integrated Microwave Power Combiner">
+            </div>
+            <h3>Integrated Microwave Power Combiner</h3>
+            <p>Low-loss on-chip combiner in 28 nm CMOS with 0.6 dB insertion loss.</p>
+          </a>
+ 
+          <a href="projects.html#sepic-converter" class="teaser-card">
+            <div class="teaser-image">
+              <img src="images/sepic_converter.jpg" width="200" height="120" alt="SEPIC Power Converter">
+            </div>
+            <h3>SEPIC Power Converter</h3>
+            <p>105 W converter for a 20–30 W S-band amplifier, 85% efficient at 3 A.</p>
+          </a>
+        </div>
+ 
+        <a href="projects.html" class="btn btn-outline view-all">
+          View all projects
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+ 
+    <!-- ============ PUBLICATIONS SECTION ============ -->
+    <section id="publications" class="section">
+      <!-- Note the id is lowercase. ids are case-sensitive, so
+           #Publications and #publications are different targets. -->
+      <div class="wrap">
+        <p class="section-label">03 — Publications</p>
+        <p class="lede lede-compact">
+          Published work, with links to the full text on IEEE Xplore.
+        </p>
+        <ul class="pub-list">
+          <li class="pub">
+            <h3>A 16-to-256QAM G-Band Subharmonic Phase-Modulating Transmitter for Beyond-5G Communications</h3>
+            <!-- List authors in the order they appear on the paper.
+                 The <strong> tags make your own name bold. -->
+            <p class="pub-authors">Jia Zhou, Jieqiong Du, Chao-Jen Tien, Jhih-Wei Chen, Ruei-Chen Soong, 
+              <strong>Francisco Cardenas Beltran</strong>, Lachlan Cuskelly, Christopher Chen, Minju Zhu, Adrian Tang,
+              Sai-Wang Tam, and Mau-Chung Frank Chang</p>
+            <p class="pub-venue">IEEE International Solid-State Circuits Conference (ISSCC), 2026</p>
+            <div class="project-links">
+              <a class="pill-link" href="https://ieeexplore.ieee.org/document/11409097" target="_blank" rel="noopener">
+                View on IEEE Xplore <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </li>
+ 
+          <li class="pub">
+            <h3>A 71–86-GHz 1024-QAM Direct-Carrier Phase-Modulating Transmitter With Digital-to-Phase Converter and Constant-Envelope Phasor Combiner</h3>
+            <p class="pub-authors">Jia Zhou, Jieqiong Du, Chao-Jen Tien, Christopher Chen, Jhih-Wei Chen,
+              Lachlan Cuskelly, <strong>Francisco Cardenas Beltran</strong>, Adrian Tang, Sai-Wang Tam,
+              Mau-Chung Frank Chang</p>
+            <p class="pub-venue">IEEE Journal of Solid-State Circuits, 2026</p>
+            <div class="project-links">
+              <a class="pill-link" href="https://ieeexplore.ieee.org/document/11457391" target="_blank" rel="noopener">
+                View on IEEE Xplore <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+ 
+    <!-- ============ CONTACT SECTION ============ -->
+    <section id="contact" class="section">
+      <div class="wrap">
+        <p class="section-label">04 — Contact</p>
+        <h2>Let's talk.</h2>
+        <p class="lede">
+          I'm open to internships and research collaborations in RF/mmWave and analog circuits as well. 
+          as power electronics.If you're working on something in this space, I'd like to hear about it.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:franciscocb2005@gmail.com">franciscocb2005@gmail.com</a>
+          <a href="https://linkedin.com/in/francisco-cardenas-beltran" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/fcbeltran05" target="_blank" rel="noopener">GitHub</a>
+          <!-- Swap yourusername for your actual GitHub username. -->
+        </div>
+      </div>
+    </section>
+  </main>
+ 
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Francisco Cardenas Beltran. Built with HTML &amp; CSS.</p>
+      <!-- &copy; and &amp; are "HTML entities" — special codes for
+           characters that either aren't on a keyboard (©) or that HTML
+           reserves for its own syntax (& is used in entities themselves,
+           so a literal & has to be written as &amp;). -->
+    </div>
+  </footer>
+ 
+</body>
+</html>
